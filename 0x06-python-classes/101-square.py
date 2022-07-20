@@ -1,54 +1,66 @@
 #!/usr/bin/python3
-"""My square module"""
+""" Module providing a definition of a class 'Square'
+"""
 
 
-class Square:
-    """defines a square"""
-
-    def __init__(self, size=0):
-        """Create a Square
-        Args: size: length of a side of Square
+class Square():
+    """ Definition of a 'Square'
+    """
+    def __init__(self, size=0, position=(0, 0)):
+        """ Instantiate a 'Square'
         """
-        self.__size = size
+        self.size, self.position = size, position
+
+    def __str__(self):
+        """ Create a visual representation of a square
+        """
+        if self.size:
+            return '\n' * self.position[1] + '\n'.join(
+                [' ' * self.position[0] + '#' * self.size] * self.size
+            )
+        return str()
 
     @property
     def size(self):
-        """"The propery of size as the len of a side of Square
-        Raises:
-            TypeError: if size != int
-            ValueErrorr: if size < 0
+        """ Get the size of a square
         """
         return self.__size
 
     @size.setter
-    def size(self, value):
-        if not isinstance(value, int):
-            raise TypeError('size must be an integer')
-        if value < 0:
-            raise ValueError('size must be >= 0')
-        self.__size = value
+    def size(self, size):
+        """ Set the size of a square
+        """
+        if not isinstance(size, int):
+            raise TypeError("size must be an integer")
+        if size < 0:
+            raise ValueError("size must be >= 0")
+        self.__size = size
+
+    @property
+    def position(self):
+        """ Get the position of a square
+        """
+        return self.__position
+
+    @position.setter
+    def position(self, position):
+        """ Set the position of a square
+        """
+        if not (isinstance(position, tuple) and
+                len(position) == 2 and
+                isinstance(position[0], int) and
+                isinstance(position[1], int) and
+                position[0] >= 0 and
+                position[1] >= 0):
+            raise TypeError("position must be a tuple of 2 positive integers")
+        self.__position = position
 
     def area(self):
-        """Get the area of a Square
-        Returns: The size squared
+        """ Compute the area of a 'Square'
         """
-        return self.__size * self.__size
+        return self.size ** 2
 
-    def __le__(self, other):
-        return self.area() <= other.area()
-
-    def __lt__(self, other):
-        return self.area() < other.area()
-
-    def __ge__(self, other):
-        return self.area() >= other.area()
-
-    def __ne__(self, other):
-        return self.area() != other.area()
-
-    def __gt__(self, other):
-        return self.area() > other.area()
-
-    def __eq__(self, other):
-        return self.area() == other.area()
-
+    def my_print(self):
+        """ Print a visual representation of a square
+        """
+        print(self)
