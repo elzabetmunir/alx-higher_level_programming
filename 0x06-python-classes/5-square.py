@@ -1,45 +1,38 @@
 #!/usr/bin/python3
-"""My square module"""
+""" Module providing a definition of a class 'Square'
+"""
 
 
-class Square:
-    """defines a square"""
-
+class Square():
+    """ Definition of a 'Square'
+    """
     def __init__(self, size=0):
-        """Create a Square
-        Args: size: length of a side of Square
+        """ Instantiate a 'Square'
         """
-        self.__size = size
+        self.size = size
 
     @property
     def size(self):
-        """"The propery of size as the len of a side of Square
-        Raises:
-            TypeError: if size != int
-            ValueError: if size < 0
+        """ Get the size of a square
         """
         return self.__size
 
     @size.setter
-    def size(self, value):
-        if not isinstance(value, int):
-            raise TypeError('size must be an integer')
-        if value < 0:
-            raise ValueError('size must be >= 0')
-        self.__size = value
+    def size(self, size):
+        """ Set the size of a square
+        """
+        if not isinstance(size, int):
+            raise TypeError("size must be an integer")
+        if size < 0:
+            raise ValueError("size must be >= 0")
+        self.__size = size
 
     def area(self):
-        """Get the area of a Square
-        Returns: The size squared
+        """ Compute the area of a 'Square'
         """
-        return self.__size * self.__size
+        return self.size ** 2
 
     def my_print(self):
-        """print the square in #"""
-        if self.size > 0:
-            for l in range(self.size):
-                for w in range(self.size):
-                    print("#", end='')
-                print()
-        else:
-            print()
+        """ Print a visual representation of a square
+        """
+        print('\n'.join(['#' * self.size] * self.size))
