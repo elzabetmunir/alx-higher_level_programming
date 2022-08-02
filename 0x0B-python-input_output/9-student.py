@@ -1,25 +1,47 @@
 #!/usr/bin/python3
-"""Module 9-add_item.
-Adds all arguments to a Python list,
-and then save them to a file.
+"""Module 13-student.
+Creates a Student class.
 """
 
-import sys
-import json
-import os.path
 
-save_to_json_file = __import__("7-save_to_json_file").save_to_json_file
-load_from_json_file = __import__("8-load_from_json_file").load_from_json_file
+class Student:
+    """Class that defines a student.
+    Public attributes:
+        - first_name
+        - last_name
+        - age
+    Public method to_json().
+    Public method reload_from_json().
+    """
 
-my_file = 'add_item.json'
+    def __init__(self, first_name, last_name, age):
+        """Initializes the Student instance."""
 
-my_list = []
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
 
-if os.path.exists(my_file) and os.path.getsize(my_file) > 0:
-    my_list = load_from_json_file(my_file)
+    def to_json(self, attrs=None):
+        """Retrieves a dictionary representation
+        of a Student instance.
+        Args:
+            - attrs: list of attributes
+        Returns: the dict representation of the instance.
+        """
 
-if len(sys.argv) > 1:
-    for elem in sys.argv[1:]:
-        my_list.append(elem)
+        my_dict = dict()
+        if attrs and all(isinstance(x, str) for x in attrs):
+            for x in attrs:
+                if x in self.__dict__:
+                    my_dict.update({x: self.__dict__[x]})
+            return my_dict
+        return self.__dict__
 
-save_to_json_file(my_list, my_file)
+    def reload_from_json(self, json):
+        """Replaces all attributes of the Student instance.
+        Args:
+            - json: dictionnary of attributes
+        """
+
+        for x in json:
+            self.__dict__.update({x: json[x]})
